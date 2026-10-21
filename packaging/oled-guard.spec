@@ -11,6 +11,7 @@ Requires:       python3 >= 3.9
 Requires:       python3-gobject
 Requires:       python3-cairo
 Requires:       gtk3
+Requires:       gobject-introspection
 Requires:       python3-xlib
 Requires:       brightnessctl
 Recommends:     gtk-layer-shell
