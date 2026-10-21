@@ -1,17 +1,20 @@
-pkgname=oled-guard
-pkgver=0.2.0.alpha
+pkgname=caffeine-for-oled
+pkgver=0.2.1.alpha
 pkgrel=1
 pkgdesc='Manual OLED screen protection with brightness recovery and Turkish / English UI'
 arch=('any')
 url='https://github.com/Mouge01/oled-guard'
-license=('LicenseRef-Proprietary')
+license=('GPL-3.0-only')
+provides=('oled-guard')
+conflicts=('oled-guard')
+replaces=('oled-guard')
 depends=('python>=3.9' 'python-gobject' 'python-cairo' 'gtk3' 'python-xlib' 'brightnessctl')
 optdepends=('gtk-layer-shell: multi-display Wayland overlays on supported compositors')
-source=('https://github.com/Mouge01/oled-guard/releases/download/v0.2.0-alpha/oled-guard-0.2.0-alpha-source.tar.gz')
+source=('https://github.com/Mouge01/oled-guard/releases/download/v0.2.1-alpha/caffeine-for-oled-0.2.1-alpha-source.tar.gz')
 sha256sums=('@SHA256@')
 options=('!debug' '!strip')
 
 package() {
-    cd "$srcdir/oled-guard-0.2.0-alpha"
+    cd "$srcdir/caffeine-for-oled-0.2.1-alpha"
     python3 tools/package_linux.py stage --dest "$pkgdir"
 }

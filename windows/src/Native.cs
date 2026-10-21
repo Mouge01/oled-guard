@@ -67,7 +67,7 @@ namespace OledGuard
         public ExitKeyHook(Action stop)
         {
             this.stop = stop;
-            thread = new Thread(Run) { IsBackground = true, Name = "OLED Guard exit key" };
+            thread = new Thread(Run) { IsBackground = true, Name = "Caffeine For OLED exit key" };
             thread.SetApartmentState(ApartmentState.STA); thread.Start();
             if (!ready.WaitOne(4000)) throw new InvalidOperationException(I18n.T("SPACE dinleyicisi başlatılamadı."));
             if (failure != null) throw new InvalidOperationException(I18n.T("SPACE dinleyicisi kurulamadı."), failure);

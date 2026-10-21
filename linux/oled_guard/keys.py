@@ -127,8 +127,8 @@ class PortalKeys:
         def created(result):
             self.session = result["session_handle"]
             shortcuts = [
-                ("restore", {"description": GLib.Variant("s", "OLED Guard: restore display"), "preferred_trigger": GLib.Variant("s", "space")}),
-                ("toggle", {"description": GLib.Variant("s", "OLED Guard: start / stop"), "preferred_trigger": GLib.Variant("s", "CTRL+ALT+o")}),
+                ("restore", {"description": GLib.Variant("s", "Caffeine For OLED: restore display"), "preferred_trigger": GLib.Variant("s", "space")}),
+                ("toggle", {"description": GLib.Variant("s", "Caffeine For OLED: start / stop"), "preferred_trigger": GLib.Variant("s", "CTRL+ALT+o")}),
             ]
             self.request("BindShortcuts", [self.session, shortcuts, "", {}], bound)
 

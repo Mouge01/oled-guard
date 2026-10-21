@@ -25,7 +25,7 @@ namespace OledGuard
             FormBorderStyle = FormBorderStyle.None; ShowInTaskbar = false;
             StartPosition = FormStartPosition.Manual; Bounds = bounds;
             BackColor = Color.Black; TopMost = true; DoubleBuffered = true;
-            Text = "OLED Guard — " + (retro ? "Old style" : "Pitch black");
+            Text = "Caffeine For OLED — " + (retro ? "Old style" : "Pitch black");
             animation = new Timer { Interval = 50 };
             animation.Tick += delegate { frame++; Invalidate(); };
             if (retro) animation.Start();
@@ -66,11 +66,11 @@ namespace OledGuard
                 using (var pen = new Pen(Color.FromArgb(b / 3, b, Math.Min(100, b + 18)), 1.5f))
                     e.Graphics.DrawClosedCurve(pen, trail[i]);
             }
-            SizeF textSize = e.Graphics.MeasureString("OLED GUARD", logoFont);
+            SizeF textSize = e.Graphics.MeasureString("CAFFEINE FOR OLED", logoFont);
             float x = Bounce((float)(t * 47), Math.Max(1, Width - textSize.Width - 16));
             float y = Bounce((float)(t * 29), Math.Max(1, Height - textSize.Height - 16));
             using (var brush = new SolidBrush(Color.FromArgb(45, 68, 78)))
-                e.Graphics.DrawString("OLED GUARD", logoFont, brush, x + 8, y + 8);
+                e.Graphics.DrawString("CAFFEINE FOR OLED", logoFont, brush, x + 8, y + 8);
         }
         private static float Bounce(float value, float limit)
         { float cycle = value % (limit * 2); return cycle < limit ? cycle : limit * 2 - cycle; }

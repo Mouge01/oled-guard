@@ -1,4 +1,4 @@
-# OLED Guard · 0.2 alpha
+# Caffeine For OLED · 0.2.1 alpha
 
 [Türkçe](README.tr.md) · [Downloads](https://github.com/Mouge01/oled-guard/releases)
 
@@ -10,12 +10,12 @@ Three modes: **Pitch black**, **Old style** moving ribbons, and **hardware brigh
 
 | Platform | Release asset | Install / launch |
 | --- | --- | --- |
-| Windows 11 | `OLED-Guard-0.2-alpha-Windows.zip` | Extract; run `OLEDGuard.exe`. Keep its `.exe.config` beside it. Exit 0.1 from the tray before opening 0.2. |
-| Debian | `oled-guard_0.2.0~alpha-1_all.deb` | `sudo apt install ./oled-guard_0.2.0~alpha-1_all.deb` |
-| Fedora | `oled-guard-0.2.0-0.1.alpha.noarch.rpm` | `sudo dnf install ./oled-guard-0.2.0-0.1.alpha.noarch.rpm` |
-| Arch | `oled-guard-0.2.0.alpha-1-any.pkg.tar.zst` | `sudo pacman -U ./oled-guard-0.2.0.alpha-1-any.pkg.tar.zst` |
+| Windows 11 | `Caffeine-For-OLED-0.2.1-alpha-Windows.zip` | Extract; run `CaffeineForOLED.exe`. Keep its `.exe.config` beside it. Exit the previous version from the tray before opening 0.2.1. |
+| Debian | `caffeine-for-oled_0.2.1.alpha-1_all.deb` | `sudo apt install ./caffeine-for-oled_0.2.1.alpha-1_all.deb` |
+| Fedora | `caffeine-for-oled-0.2.1-0.1.alpha.noarch.rpm` | `sudo dnf install ./caffeine-for-oled-0.2.1-0.1.alpha.noarch.rpm` |
+| Arch | `caffeine-for-oled-0.2.1.alpha-1-any.pkg.tar.zst` | `sudo pacman -U ./caffeine-for-oled-0.2.1.alpha-1-any.pkg.tar.zst` |
 
-Linux: launch **OLED Guard** from the application menu or run `oled-guard`. Dependencies come from the distribution's package manager. Packages do not install an autostart entry, system service, privilege-changing helper, or permissive device rules. Run the GUI as your normal desktop user.
+Linux: launch **Caffeine For OLED** from the application menu or run `caffeine-for-oled`. Dependencies come from the distribution's package manager. Packages do not install an autostart entry, system service, privilege-changing helper, or permissive device rules. Run the GUI as your normal desktop user.
 
 The Linux packages contain architecture-independent Python code (`all` / `noarch` / `any`). Availability of distribution dependencies and hardware drivers still varies by architecture. The Windows portable build is managed AnyCPU and was tested on Windows x64.
 
@@ -23,9 +23,9 @@ The Linux packages contain architecture-independent Python code (`all` / `noarch
 
 Select a mode and options, then **Start**. **SPACE** restores the screen; **ESC** is the backup exit on Windows and X11. Windows and X11 also support **Ctrl+Alt+O** to start / stop. Windows has a further **Ctrl+Alt+Backspace** emergency shortcut. Protection only starts manually.
 
-Choose **Language / Dil → English / Türkçe** to switch languages. The choice persists locally. Linux also accepts `oled-guard --language en` and `oled-guard --language tr` while protection is stopped.
+Choose **Language / Dil → English / Türkçe** to switch languages. The choice persists locally. Linux also accepts `caffeine-for-oled --language en` and `caffeine-for-oled --language tr` while protection is stopped.
 
-After stopping, the application may remain hidden to preserve the previous application's focus. Windows: double-click the tray icon. Linux: launch `oled-guard` again from the menu to reopen settings. `oled-guard --stop` is also available for a user-defined desktop shortcut.
+After stopping, the application may remain hidden to preserve the previous application's focus. Windows: double-click the tray icon. Linux: launch `caffeine-for-oled` again from the menu to reopen settings. `caffeine-for-oled --stop` is also available for a user-defined desktop shortcut.
 
 ### USES Slayt Yardımcısı
 
@@ -53,6 +53,8 @@ Brightness permissions are supplied by the distribution's brightnessctl / deskto
 
 Windows data: `%LocalAppData%\OLEDGuard`. Linux data: `$XDG_STATE_HOME/oled-guard`, or `~/.local/state/oled-guard` by default. Preferences and brightness recovery records stay local. No telemetry, network calls, screen recording, or keystroke logging is implemented in the application.
 
+The application was previously called OLED Guard. Existing data paths and the Linux `oled-guard` command remain supported; the primary command is now `caffeine-for-oled`. The new Linux packages replace the old `oled-guard` package.
+
 If a display is disconnected or a driver rejects restoration, the recovery record is retained for another attempt on the next launch. Reconnect the display before restarting hardware brightness mode. Killing both the app and its recovery process, sudden power loss, or broken drivers can prevent immediate recovery. Use normal system brightness controls if necessary.
 
 Windows capture exclusion is best effort and depends on the capture API. Linux does not implement the Windows capture-affinity feature. Keep the normal screen timeout / lock policies appropriate for your environment.
@@ -71,7 +73,7 @@ The alpha binaries are not commercially signed. Windows application control and 
 
 ## License
 
-No open-source license has been selected yet; see [LICENSE](LICENSE).
+Licensed under GNU GPL version 3; see [LICENSE](LICENSE).
 
 ## API references
 

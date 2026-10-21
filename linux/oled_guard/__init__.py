@@ -1,2 +1,2 @@
-"""OLED Guard Linux backend."""
-__version__ = "0.2.0-alpha"
+"""Caffeine For OLED Linux backend."""
+__version__ = "0.2.1-alpha"

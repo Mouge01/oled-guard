@@ -1,11 +1,13 @@
-Name:           oled-guard
-Version:        0.2.0
+Name:           caffeine-for-oled
+Version:        0.2.1
 Release:        0.1.alpha%{?dist}
 Summary:        Manual OLED screen protection with brightness recovery
-License:        LicenseRef-Proprietary
+License:        GPL-3.0-only
 URL:            https://github.com/Mouge01/oled-guard
-Source0:        oled-guard-0.2.0-alpha-source.tar.gz
+Source0:        caffeine-for-oled-0.2.1-alpha-source.tar.gz
 BuildArch:      noarch
+Provides:       oled-guard = %{version}-%{release}
+Obsoletes:      oled-guard < 0.3
 BuildRequires:  python3
 Requires:       python3 >= 3.9
 Requires:       python3-gobject
@@ -24,7 +26,7 @@ X11 provides global SPACE exit. Wayland hardware dimming requires an approved
 global shortcut; overlay coverage depends on the compositor.
 
 %prep
-%setup -q -n oled-guard-0.2.0-alpha
+%setup -q -n caffeine-for-oled-0.2.1-alpha
 
 %build
 
@@ -32,6 +34,7 @@ global shortcut; overlay coverage depends on the compositor.
 python3 tools/package_linux.py stage --dest %{buildroot}
 
 %files
+%{_bindir}/caffeine-for-oled
 %{_bindir}/oled-guard
 /usr/lib/oled-guard/
 %{_datadir}/applications/io.github.Mouge01.OLEDGuard.desktop
@@ -41,5 +44,6 @@ python3 tools/package_linux.py stage --dest %{buildroot}
 %license %{_datadir}/doc/oled-guard/LICENSE
 
 %changelog
-* Thu Oct 22 2026 Mouge01 - 0.2.0-0.1.alpha
-- Linux frontend and English / Turkish language selection.
+* Thu Oct 22 2026 Mouge01 - 0.2.1-0.1.alpha
+- Rename the application to Caffeine For OLED and retain legacy settings and CLI.
+- Include GNU GPLv3 license and Turkish / English language selection.

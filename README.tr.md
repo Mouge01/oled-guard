@@ -1,4 +1,4 @@
-# OLED Guard · 0.2 alpha
+# Caffeine For OLED · 0.2.1 alpha
 
 [English](README.md) · [İndir](https://github.com/Mouge01/oled-guard/releases)
 
@@ -6,20 +6,22 @@ Windows 11, Debian, Fedora ve Arch Linux için elle başlatılan OLED ekran koru
 
 ## Kurulum
 
-- **Windows 11:** Windows ZIP'ini çıkarın. Çalışan 0.1 sürümünden tepsi menüsündeki **Çıkış** ile çıkın. `OLEDGuard.exe` dosyasını açın; `.exe.config` yanında kalsın.
-- **Debian:** `sudo apt install ./oled-guard_0.2.0~alpha-1_all.deb`
-- **Fedora:** `sudo dnf install ./oled-guard-0.2.0-0.1.alpha.noarch.rpm`
-- **Arch:** `sudo pacman -U ./oled-guard-0.2.0.alpha-1-any.pkg.tar.zst`
+- **Windows 11:** Windows ZIP'ini çıkarın. Çalışan 0.1 sürümünden tepsi menüsündeki **Çıkış** ile çıkın. `CaffeineForOLED.exe` dosyasını açın; `.exe.config` yanında kalsın.
+- **Debian:** `sudo apt install ./caffeine-for-oled_0.2.1.alpha-1_all.deb`
+- **Fedora:** `sudo dnf install ./caffeine-for-oled-0.2.1-0.1.alpha.noarch.rpm`
+- **Arch:** `sudo pacman -U ./caffeine-for-oled-0.2.1.alpha-1-any.pkg.tar.zst`
 
-Linux'ta uygulama menüsünden **OLED Guard** veya terminalden `oled-guard` ile açılır. Bağımlılıklar dağıtımın paket yöneticisi tarafından kurulur. Grafik arayüzü normal kullanıcıyla çalıştırın. Otomatik başlangıç, sistem hizmeti veya ayrıcalık kazandıran bir yardımcı kurulmaz.
+Linux'ta uygulama menüsünden **Caffeine For OLED** veya terminalden `caffeine-for-oled` ile açılır. Bağımlılıklar dağıtımın paket yöneticisi tarafından kurulur. Grafik arayüzü normal kullanıcıyla çalıştırın. Otomatik başlangıç, sistem hizmeti veya ayrıcalık kazandıran bir yardımcı kurulmaz.
+
+Uygulamanın önceki adı OLED Guard idi. Eski ayar ve parlaklık kurtarma dizinleri korunur. Linux'ta `oled-guard` komutu da çalışmaya devam eder; yeni paketler eski `oled-guard` paketinin yerini alır.
 
 ## Kullanım
 
 **Pitch black**, **Old style** veya **Parlaklık %0** seçin ve başlatın. Windows ve X11'de **SPACE** geri döndürür, **ESC** yedek çıkıştır, **Ctrl+Alt+O** başlatır/durdurur. Windows'ta **Ctrl+Alt+Backspace** de kullanılabilir.
 
-Dil seçicisinden İngilizce veya Türkçe seçebilirsiniz. Linux'ta koruma durmuşken `oled-guard --language en` veya `oled-guard --language tr` de kullanılabilir.
+Dil seçicisinden İngilizce veya Türkçe seçebilirsiniz. Linux'ta koruma durmuşken `caffeine-for-oled --language en` veya `caffeine-for-oled --language tr` de kullanılabilir.
 
-SPACE sonrası Windows tepside kalabilir; ayarlar için simgeye çift tıklayın. Linux'ta ayarları açmak için uygulamayı menüden yeniden başlatın. `oled-guard --stop` komutu kullanıcı tanımlı masaüstü kısayoluna atanabilir.
+SPACE sonrası Windows tepside kalabilir; ayarlar için simgeye çift tıklayın. Linux'ta ayarları açmak için uygulamayı menüden yeniden başlatın. `caffeine-for-oled --stop` komutu kullanıcı tanımlı masaüstü kısayoluna atanabilir.
 
 **USES için:** Örtüsüz donanım parlaklığını seçen USES profilini kullanın. Chrome'u ve ders sekmesini açık bırakın. Windows / X11'de ders penceresine dönüp Ctrl+Alt+O kullanabilirsiniz. Örtü, tarayıcının arka plan algısını etkileyebilir.
 
@@ -41,4 +43,4 @@ Parlaklık değişmeden önce eski değerler kaydedilir. Ayrı yardımcı süre�
 
 Gerçek Linux OLED donanımı, Wayland masaüstü ve USES ders geçişi uçtan uca henüz doğrulanmadı. Yerel testler, sahte parlaklık aygıtları ve izole X11 görüntüsü kullanır. Ayrıntılar [VALIDATION.md](VALIDATION.md) dosyasındadır.
 
-Geliştirme komutları, özellik tablosu ve teknik kaynaklar [İngilizce belgede](README.md) yer alır. Kaynak için henüz bir açık kaynak lisansı seçilmemiştir; [LICENSE](LICENSE) geçerlidir.
+Geliştirme komutları, özellik tablosu ve teknik kaynaklar [İngilizce belgede](README.md) yer alır. GNU GPLv3 lisansı geçerlidir; [LICENSE](LICENSE) dosyasını inceleyebilirsiniz.

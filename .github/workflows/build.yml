@@ -44,6 +44,7 @@ jobs:
             fedora) dnf install -y ./packages/*.rpm ;;
             arch) pacman -U --noconfirm ./packages/*.pkg.tar.zst ;;
           esac
+          caffeine-for-oled --version
           oled-guard --version
       - name: Core and real X11 integration tests
         env:
@@ -102,4 +103,4 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         run: |
-          gh release create "$GITHUB_REF_NAME" dist/* --prerelease --title "OLED Guard 0.2 alpha" --notes "Windows 11 portable ZIP; Debian DEB; Fedora RPM; Arch package and PKGBUILD. English / Turkish UI. Linux X11 tested in Debian, Fedora and Arch containers. Wayland and physical OLED hardware remain alpha validation targets. See README and VALIDATION.md."
+          gh release create "$GITHUB_REF_NAME" dist/* --prerelease --title "Caffeine For OLED 0.2.1 alpha" --notes "Windows 11 portable ZIP; Debian DEB; Fedora RPM; Arch package and PKGBUILD. English / Turkish UI. Linux X11 tested in Debian, Fedora and Arch containers. Wayland and physical OLED hardware remain alpha validation targets. See README and VALIDATION.md."

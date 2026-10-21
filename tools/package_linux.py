@@ -10,8 +10,8 @@ import tarfile
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "0.2.0-alpha"
-SOURCE = "oled-guard-" + VERSION + "-source.tar.gz"
+VERSION = "0.2.1-alpha"
+SOURCE = "caffeine-for-oled-" + VERSION + "-source.tar.gz"
 
 
 def run(command, **kwargs):
@@ -28,10 +28,11 @@ def stage(dest):
         os.chmod(package / file.name, 0o644)
     shutil.copy2(ROOT / "common/translations.json", package / "translations.json")
     (library / "launcher.py").write_text("from oled_guard import __main__\n", encoding="utf-8")
-    executable = dest / "usr/bin/oled-guard"
+    executable = dest / "usr/bin/caffeine-for-oled"
     executable.parent.mkdir(parents=True, exist_ok=True)
     executable.write_text('#!/bin/sh\nexec /usr/bin/python3 /usr/lib/oled-guard/launcher.py "$@"\n', encoding="utf-8")
     os.chmod(executable, 0o755)
+    (executable.parent / "oled-guard").symlink_to(executable.name)
     for filename, location in (
         ("io.github.Mouge01.OLEDGuard.desktop", "usr/share/applications"),
         ("io.github.Mouge01.OLEDGuard.svg", "usr/share/icons/hicolor/scalable/apps"),
@@ -47,7 +48,7 @@ def stage(dest):
     for directory in [dest, *[p for p in dest.rglob("*") if p.is_dir()]]:
         os.chmod(directory, 0o755)
     for file in dest.rglob("*"):
-        if file.is_file() and file != executable:
+        if file.is_file() and not file.is_symlink() and file != executable:
             os.chmod(file, 0o644)
 
 
@@ -65,7 +66,7 @@ def source_archive(output):
             if any(part in {".git", "dist", "build", "__pycache__"} for part in relative.parts):
                 continue
             if file.is_file() and file.suffix not in {".exe", ".pyc", ".png", ".log"} and not file.name.endswith(".png.txt"):
-                tar.add(file, arcname=Path("oled-guard-" + VERSION) / relative, recursive=False, filter=normalized)
+                tar.add(file, arcname=Path("caffeine-for-oled-" + VERSION) / relative, recursive=False, filter=normalized)
     return archive
 
 
@@ -74,11 +75,14 @@ def build_deb(work, output):
     stage(tree)
     control = tree / "DEBIAN"
     control.mkdir()
-    (control / "control").write_text("""Package: oled-guard
-Version: 0.2.0~alpha-1
+    (control / "control").write_text("""Package: caffeine-for-oled
+Version: 0.2.1~alpha-1
 Section: utils
 Priority: optional
 Architecture: all
+Provides: oled-guard
+Conflicts: oled-guard
+Replaces: oled-guard
 Maintainer: Mouge01 <172084785+Mouge01@users.noreply.github.com>
 Depends: python3 (>= 3.9), python3-gi, python3-gi-cairo, gir1.2-gtk-3.0, python3-xlib, brightnessctl
 Recommends: gir1.2-gtklayershell-0.1
@@ -89,7 +93,7 @@ Description: Manual OLED screen protection with brightness recovery
 """, encoding="utf-8")
     os.chmod(control, 0o755)
     os.chmod(control / "control", 0o644)
-    run(["dpkg-deb", "--root-owner-group", "--build", str(tree), str(output / "oled-guard_0.2.0~alpha-1_all.deb")])
+    run(["dpkg-deb", "--root-owner-group", "--build", str(tree), str(output / "caffeine-for-oled_0.2.1.alpha-1_all.deb")])
 
 
 def build_rpm(work, output, archive):

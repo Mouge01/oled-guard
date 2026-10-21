@@ -6,10 +6,10 @@ using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 
-[assembly: AssemblyTitle("OLED Guard")]
+[assembly: AssemblyTitle("Caffeine For OLED")]
 [assembly: AssemblyDescription("Windows 11 OLED ekran koruyucu")]
-[assembly: AssemblyVersion("0.2.0.0")]
-[assembly: AssemblyFileVersion("0.2.0.0")]
+[assembly: AssemblyVersion("0.2.1.0")]
+[assembly: AssemblyFileVersion("0.2.1.0")]
 [assembly: System.Runtime.Versioning.TargetFramework(".NETFramework,Version=v4.8")]
 
 namespace OledGuard
@@ -41,7 +41,7 @@ namespace OledGuard
             {
                 if (!first)
                 {
-                    IntPtr window = Native.FindWindow(null, "OLED Guard · 0.2 alpha");
+                    IntPtr window = Native.FindWindow(null, "Caffeine For OLED · 0.2.1 alpha");
                     if (window != IntPtr.Zero) Native.PostMessage(window, 0x8001, IntPtr.Zero, IntPtr.Zero);
                     return 0;
                 }
@@ -56,7 +56,7 @@ namespace OledGuard
                 { Storage.Log("Fatal: " + e.ExceptionObject); };
                 try { using (var form = new MainForm(false)) Application.Run(form); return 0; }
                 catch (Exception e)
-                { Storage.Log(e.ToString()); MessageBox.Show(e.Message, I18n.T("OLED Guard başlatılamadı"), MessageBoxButtons.OK, MessageBoxIcon.Error); return 1; }
+                { Storage.Log(e.ToString()); MessageBox.Show(e.Message, I18n.T("Caffeine For OLED başlatılamadı"), MessageBoxButtons.OK, MessageBoxIcon.Error); return 1; }
                 finally { mutex.ReleaseMutex(); }
             }
         }

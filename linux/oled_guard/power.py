@@ -19,7 +19,7 @@ class Power:
             flags |= Gtk.ApplicationInhibitFlags.IDLE
         if not flags:
             return
-        self.cookie = self.app.inhibit(self.window, flags, "OLED Guard protection is active")
+        self.cookie = self.app.inhibit(self.window, flags, "Caffeine For OLED protection is active")
         if self.cookie:
             return
         try:
@@ -27,13 +27,13 @@ class Power:
                 system = Gio.bus_get_sync(Gio.BusType.SYSTEM, None)
                 reply, descriptors = system.call_with_unix_fd_list_sync(
                     "org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "Inhibit",
-                    GLib.Variant("(ssss)", ("sleep", "OLED Guard", "OLED protection is active", "block")),
+                    GLib.Variant("(ssss)", ("sleep", "Caffeine For OLED", "OLED protection is active", "block")),
                     GLib.VariantType("(h)"), Gio.DBusCallFlags.NONE, 3000, None, None)
                 self.fd = descriptors.get(reply.unpack()[0])
             if settings.display or settings.lock:
                 self.bus = Gio.bus_get_sync(Gio.BusType.SESSION, None)
                 reply = self.bus.call_sync("org.freedesktop.ScreenSaver", "/org/freedesktop/ScreenSaver",
-                    "org.freedesktop.ScreenSaver", "Inhibit", GLib.Variant("(ss)", ("OLED Guard", "OLED protection is active")),
+                    "org.freedesktop.ScreenSaver", "Inhibit", GLib.Variant("(ss)", ("Caffeine For OLED", "OLED protection is active")),
                     GLib.VariantType("(u)"), Gio.DBusCallFlags.NONE, 3000, None)
                 self.screen_cookie = reply.unpack()[0]
         except Exception as error:

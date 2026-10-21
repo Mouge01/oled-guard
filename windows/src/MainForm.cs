@@ -44,7 +44,7 @@ namespace OledGuard
             var savedSettings = Storage.LoadSettings();
             if (savedSettings.Language == "en" || savedSettings.Language == "tr") I18n.Language = savedSettings.Language;
             previousWindow = Native.GetForegroundWindow();
-            Text = "OLED Guard · 0.2 alpha"; Icon = SystemIcons.Application;
+            Text = "Caffeine For OLED · 0.2.1 alpha"; Icon = SystemIcons.Application;
             BackColor = Color.FromArgb(14, 20, 27); ForeColor = Ink;
             AutoScaleMode = AutoScaleMode.None; Font = new Font("Segoe UI", 10);
             ClientSize = new Size(760, 775); MinimumSize = new Size(660, 640);
@@ -53,7 +53,7 @@ namespace OledGuard
             Controls.Add(scroller);
             layout.Dock = DockStyle.Top; layout.AutoSize = true; layout.ColumnCount = 1;
             layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100)); scroller.Controls.Add(layout);
-            var brand = new Label { Text = "OLED GUARD", Font = new Font("Segoe UI", 23, FontStyle.Bold), ForeColor = Ink, Dock = DockStyle.Fill };
+            var brand = new Label { Text = "CAFFEINE FOR OLED", Font = new Font("Segoe UI", 23, FontStyle.Bold), ForeColor = Ink, Dock = DockStyle.Fill };
             Add(brand, 52);
             var languageRow = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 2, Margin = new Padding(0) };
             languageRow.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 55));
@@ -92,7 +92,7 @@ namespace OledGuard
             start.Text = I18n.T("Korumayı başlat"); StyleButton(start, Accent, Color.FromArgb(12, 30, 29));
             start.Font = new Font("Segoe UI", 12, FontStyle.Bold); Add(start, 48);
             status.ForeColor = Muted; status.Dock = DockStyle.Fill; status.Padding = new Padding(0, 7, 0, 0); Add(status, 44);
-            var footer = LabelOf(I18n.T("0.2 ALPHA  ·  Windows 11  ·  Ctrl+Alt+O: başlat / durdur"), Muted);
+            var footer = LabelOf(I18n.T("0.2.1 ALPHA  ·  Windows 11  ·  Ctrl+Alt+O: başlat / durdur"), Muted);
             footer.Font = new Font("Segoe UI", 9); Add(footer, 27);
 
             ApplySettings(savedSettings);
@@ -188,7 +188,7 @@ namespace OledGuard
         private async Task Initialize()
         {
             start.Enabled = false;
-            tray = new NotifyIcon { Text = I18n.T("OLED Guard · Hazır"), Icon = SystemIcons.Application, Visible = true };
+            tray = new NotifyIcon { Text = I18n.T("Caffeine For OLED · Hazır"), Icon = SystemIcons.Application, Visible = true };
             var menu = new ContextMenuStrip();
             menu.Items.Add(I18n.T("Korumayı başlat"), null, async delegate { await StartProtection(); });
             menu.Items.Add(I18n.T("Korumayı durdur"), null, async delegate { await StopProtection(I18n.T("Koruma durduruldu."), false); });
@@ -228,7 +228,7 @@ namespace OledGuard
             {
                 lastPulse = DateTime.UtcNow;
                 if (!Native.PulseIdle() && !idlePulseFailed)
-                { idlePulseFailed = true; Storage.Log("Idle reset failed."); tray.ShowBalloonTip(4000, "OLED Guard", I18n.T("Otomatik kilidi önleme isteği reddedildi."), ToolTipIcon.Warning); }
+                { idlePulseFailed = true; Storage.Log("Idle reset failed."); tray.ShowBalloonTip(4000, "Caffeine For OLED", I18n.T("Otomatik kilidi önleme isteği reddedildi."), ToolTipIcon.Warning); }
             }
         }
         public async Task StartProtection()
@@ -267,7 +267,7 @@ namespace OledGuard
                 }
                 cancellation.Token.ThrowIfCancellationRequested();
                 active = true; lastPulse = DateTime.UtcNow; idlePulseFailed = false;
-                tray.Text = I18n.T("OLED Guard · Koruma etkin · SPACE ile dön");
+                tray.Text = I18n.T("Caffeine For OLED · Koruma etkin · SPACE ile dön");
                 Storage.Log("Protection started: " + settings.Mode);
                 }
                 catch (Exception e) { startupError = e; }
@@ -300,7 +300,7 @@ namespace OledGuard
         private void ShowWithoutStealingFocus()
         {
             // Stay in the tray after SPACE so Chrome keeps its foreground window.
-            if (tray != null) tray.Text = I18n.T("OLED Guard · Hazır · Çift tıkla: ayarlar");
+            if (tray != null) tray.Text = I18n.T("Caffeine For OLED · Hazır · Çift tıkla: ayarlar");
         }
         private async Task<string> Cleanup()
         {
@@ -314,7 +314,7 @@ namespace OledGuard
                 try { await Task.Run(() => brightness.Restore()); brightness = null; }
                 catch (Exception e) { error += I18n.T(" Parlaklık kurtarılamadı; yeniden durdurmayı veya uygulamadan çıkmayı deneyin. ") + e.Message; }
             }
-            if (tray != null) tray.Text = I18n.T("OLED Guard · Hazır");
+            if (tray != null) tray.Text = I18n.T("Caffeine For OLED · Hazır");
             return error;
         }
         private async Task ExitApplication()

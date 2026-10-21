@@ -34,7 +34,7 @@ class Overlay(Gtk.Window):
         self.start_time = time.monotonic()
         self.trail = []
         self.source = None
-        self.set_title("OLED Guard")
+        self.set_title("Caffeine For OLED")
         self.set_decorated(False)
         self.set_skip_taskbar_hint(True)
         self.set_skip_pager_hint(True)
@@ -134,7 +134,7 @@ class App(Gtk.Application):
                 self.window.show_all()
                 self.window.present()
             return
-        self.window = Gtk.ApplicationWindow(application=self, title="OLED Guard · 0.2 alpha")
+        self.window = Gtk.ApplicationWindow(application=self, title="Caffeine For OLED · 0.2.1 alpha")
         self.window.set_default_size(690, 720)
         self.window.connect("delete-event", self.quit_requested)
         display = Gdk.Display.get_default()
@@ -191,7 +191,7 @@ class App(Gtk.Application):
         self.window.add(scroll)
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=11, margin=24)
         scroll.add(box)
-        brand = self.label("OLED GUARD")
+        brand = self.label("CAFFEINE FOR OLED")
         brand.set_name("brand")
         box.pack_start(brand, False, False, 0)
         languages = Gtk.ComboBoxText()
@@ -247,7 +247,7 @@ class App(Gtk.Application):
         self.status = self.label("Hazır. Koruma yalnızca siz başlattığınızda çalışır.")
         self.status.set_name("status")
         box.pack_start(self.status, False, False, 0)
-        box.pack_start(self.label("0.2 ALPHA · Linux · X11 / Wayland"), False, False, 0)
+        box.pack_start(self.label("0.2.1 ALPHA · Linux · X11 / Wayland"), False, False, 0)
 
     def read_settings(self):
         return Settings(language=self.settings.language, mode=self.mode.get_active_id(), sleep=self.sleep.get_active(),

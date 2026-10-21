@@ -1,4 +1,4 @@
-# 0.2 alpha validation
+# 0.2.1 alpha validation
 
 Local development environment: Windows 11 x64 and Ubuntu 26.04 in WSL2.
 
