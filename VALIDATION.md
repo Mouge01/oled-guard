@@ -3,7 +3,7 @@
 Local development environment: Windows 11 x64 and Ubuntu 26.04 in WSL2.
 
 - Windows: 19 tests cover language switching, brightness snapshot/rollback/retry, crash recovery, power flags, input ABI, pure-black non-activating overlays, global SPACE swallowing, animation and a real watchdog process. Hardware brightness is not changed by these tests.
-- Linux: 11 core tests cover exact brightness restoration, rollback, watchdog refusal, failed recovery retention, invalid journals, invalid settings, preferences, English/Turkish selection and a sysfs adapter operating only on temporary files.
+- Linux: 14 core tests cover exact brightness restoration, rollback, watchdog refusal, failed recovery retention, invalid journals, invalid settings, preferences, English/Turkish selection, a sysfs adapter operating only on temporary files, and simulated Wayland shortcut lifecycle / release behavior.
 - Linux X11: 3 GTK integration tests on isolated Xvfb check a pure-black overlay, focus policy, real X11 SPACE grab/restore, moving retro drawing and actual language widgets.
 - Debian/RPM/Arch packages are built using dpkg-deb, rpmbuild and makepkg and inspected using their package-manager tools. The GTK launcher is checked after staging/extraction.
 - CI contains native Debian, Fedora and Arch container test jobs and Windows build tests. Headless Windows CI skips the three interactive desktop tests (overlay, SPACE input, animation); local Windows runs include them.

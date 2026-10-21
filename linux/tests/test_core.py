@@ -6,6 +6,8 @@ import sys
 import tempfile
 import unittest
 from oled_guard.core import Brightness, BrightnessTransaction, Settings, Translator, atomic_json, restore_journal
+from oled_guard.keys import PortalKeys
+from gi.repository import GLib
 
 
 class Backend:
@@ -140,6 +142,45 @@ class CoreTests(unittest.TestCase):
         self.assertEqual(tr("Korumayı başlat"), "Start protection")
         tr.language = "tr"
         self.assertEqual(tr("Korumayı başlat"), "Korumayı başlat")
+
+    def test_wayland_exit_waits_for_key_release(self):
+        keys = PortalKeys.__new__(PortalKeys)
+        keys.session = "/session"
+        actions = []
+        keys.callback = actions.append
+        values = GLib.Variant("(osta{sv})", ("/session", "restore", 1, {}))
+        keys.activated(None, None, None, None, "Activated", values)
+        self.assertEqual(actions, [])
+        keys.activated(None, None, None, None, "Deactivated", values)
+        self.assertEqual(actions, ["stop"])
+        other = GLib.Variant("(osta{sv})", ("/other", "restore", 1, {}))
+        keys.activated(None, None, None, None, "Deactivated", other)
+        self.assertEqual(actions, ["stop"])
+
+    def test_wayland_refuses_dimming_without_exit_binding(self):
+        keys = PortalKeys.__new__(PortalKeys)
+        keys.ready = False
+        with self.assertRaises(RuntimeError):
+            keys.arm()
+
+    def test_wayland_releases_bindings_after_stop(self):
+        class Bus:
+            def __init__(self):
+                self.unsubscribed = []
+                self.closed = False
+            def signal_unsubscribe(self, identifier):
+                self.unsubscribed.append(identifier)
+            def call_sync(self, service, session, interface, method, *args):
+                self.closed = method == "Close"
+        keys = PortalKeys.__new__(PortalKeys)
+        keys.bus = Bus()
+        keys.session, keys.ready, keys.pending = "/session", True, False
+        keys.subscriptions = [1, 2]
+        keys.disarm()
+        self.assertEqual(keys.bus.unsubscribed, [1, 2])
+        self.assertTrue(keys.bus.closed)
+        self.assertFalse(keys.ready)
+        self.assertIsNone(keys.session)
 
 
 if __name__ == "__main__":

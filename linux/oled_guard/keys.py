@@ -138,14 +138,20 @@ class PortalKeys:
             self.ready = any(item[0] == "restore" for item in shortcuts)
             self.subscriptions.append(self.bus.signal_subscribe(self.SERVICE, self.INTERFACE, "Activated", self.PATH,
                 None, Gio.DBusSignalFlags.NONE, self.activated))
+            self.subscriptions.append(self.bus.signal_subscribe(self.SERVICE, self.INTERFACE, "Deactivated", self.PATH,
+                None, Gio.DBusSignalFlags.NONE, self.activated))
             self.completed(self.ready)
 
         self.request("CreateSession", [{"session_handle_token": GLib.Variant("s", "oled_" + uuid.uuid4().hex)}], created)
 
     def activated(self, connection, sender, path, interface, signal, values):
         session, key, _, _ = values.unpack()
-        if session == self.session:
-            self.callback("stop" if key == "restore" else "toggle")
+        if session != self.session:
+            return
+        if key == "restore" and signal == "Deactivated":
+            self.callback("stop")
+        elif key == "toggle" and signal == "Activated":
+            self.callback("toggle")
 
     def arm(self):
         if not self.ready:

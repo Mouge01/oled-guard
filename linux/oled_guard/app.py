@@ -158,7 +158,7 @@ class App(Gtk.Application):
     def do_command_line(self, command):
         args = command.get_arguments()[1:]
         self.activate()
-        if "--language" in args:
+        if "--language" in args and not self.active:
             index = args.index("--language")
             if index + 1 < len(args) and args[index + 1] in {"tr", "en"}:
                 self.settings.language = args[index + 1]
@@ -173,7 +173,7 @@ class App(Gtk.Application):
 
     def install_style(self):
         css = Gtk.CssProvider()
-        css.load_from_data(b"window, .background {background:#0e141b; color:#e7eef4;} label {color:#dbe6ef;} button {background:#19212a; color:#74eac5; border:1px solid #344552; padding:9px;} combobox button {padding:5px;} #start {background:#74eac5; color:#0c1e1d; font-weight:bold;} #brand {font-size:28px; font-weight:bold;} #status {color:#9eafbf;} checkbutton {padding:4px;} entry {color:#e7eef4;}")
+        css.load_from_data(b"window, .background {background:#0e141b; color:#e7eef4;} label {color:#dbe6ef;} button {background:#19212a; color:#74eac5; border:1px solid #344552; padding:9px;} combobox button {padding:5px;} #start {background:#74eac5; color:#0c1e1d; font-weight:bold;} #start label {color:#0c1e1d;} #brand {font-size:28px; font-weight:bold;} #status {color:#9eafbf;} checkbutton {padding:4px;} entry {color:#e7eef4;}")
         Gtk.StyleContext.add_provider_for_screen(Gdk.Screen.get_default(), css, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
 
     def label(self, text):
