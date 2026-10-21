@@ -60,8 +60,8 @@ jobs:
       - name: Inspect packages
         run: |
           dpkg-deb --info dist/*.deb
-          rpm -qip dist/*.rpm
-          pacman -Qip dist/*.pkg.tar.zst
+          rpm --dbpath "$(mktemp -d)" -qip dist/*.rpm
+          bsdtar -xOf dist/*.pkg.tar.zst .PKGINFO
       - uses: actions/upload-artifact@v4
         with:
           name: linux-packages
