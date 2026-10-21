@@ -1,0 +1,105 @@
+name: Build and release
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  linux-test:
+    needs: linux-packages
+    strategy:
+      fail-fast: false
+      matrix:
+        distro: [debian, fedora, arch]
+        include:
+          - distro: debian
+            image: debian:stable
+          - distro: fedora
+            image: fedora:latest
+          - distro: arch
+            image: archlinux:latest
+    runs-on: ubuntu-latest
+    container: ${{ matrix.image }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install desktop test dependencies
+        shell: bash
+        run: |
+          case '${{ matrix.distro }}' in
+            debian) apt-get update -qq; apt-get install -y --no-install-recommends python3 python3-gi python3-gi-cairo gir1.2-gtk-3.0 python3-xlib xvfb dbus-x11 xauth ;;
+            fedora) dnf install -y python3 python3-gobject python3-cairo gtk3 python3-xlib xorg-x11-server-Xvfb dbus-daemon ;;
+            arch) pacman -Syu --noconfirm --needed python python-gobject python-cairo gtk3 python-xlib xorg-server-xvfb dbus brightnessctl ;;
+          esac
+      - uses: actions/download-artifact@v4
+        with:
+          name: linux-packages
+          path: packages
+      - name: Install the real distribution package
+        shell: bash
+        run: |
+          case '${{ matrix.distro }}' in
+            debian) apt-get install -y ./packages/*.deb ;;
+            fedora) dnf install -y ./packages/*.rpm ;;
+            arch) pacman -U --noconfirm ./packages/*.pkg.tar.zst ;;
+          esac
+          oled-guard --version
+      - name: Core and real X11 integration tests
+        env:
+          OLED_GUARD_TEST_INSTALLED: '1'
+        run: bash tools/test_linux.sh
+  linux-packages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install packaging tools
+        run: sudo apt-get update -qq && sudo apt-get install -y rpm fakeroot makepkg pacman-package-manager zstd libarchive-tools
+      - name: Build DEB, RPM and Arch packages
+        run: python3 tools/package_linux.py build
+      - name: Inspect packages
+        run: |
+          dpkg-deb --info dist/*.deb
+          rpm -qip dist/*.rpm
+          pacman -Qip dist/*.pkg.tar.zst
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux-packages
+          path: |
+            dist/*.deb
+            dist/*.rpm
+            dist/*.pkg.tar.zst
+            dist/*source.tar.gz
+            dist/PKGBUILD
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and test Windows portable application
+        shell: powershell
+        run: ./windows/build.ps1 -Test -HeadlessTest
+      - name: Package Windows portable application
+        run: python tools/package_windows.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-package
+          path: dist/*Windows.zip
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [linux-packages, linux-test, windows]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Create checksums
+        run: cd dist && sha256sum *.zip *.deb *.rpm *.pkg.tar.zst *source.tar.gz PKGBUILD > SHA256SUMS.txt
+      - name: Publish alpha release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" dist/* --prerelease --title "OLED Guard 0.2 alpha" --notes "Windows 11 portable ZIP; Debian DEB; Fedora RPM; Arch package and PKGBUILD. English / Turkish UI. Linux X11 tested in Debian, Fedora and Arch containers. Wayland and physical OLED hardware remain alpha validation targets. See README and VALIDATION.md."

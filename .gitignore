@@ -1,0 +1,9 @@
+dist/
+build/
+__pycache__/
+*.pyc
+windows/*.exe
+windows/*.png
+windows/*.png.txt
+*.log
+.DS_Store

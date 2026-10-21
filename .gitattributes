@@ -1,0 +1,8 @@
+* text=auto eol=lf
+*.exe binary
+*.png binary
+*.zip binary
+*.gz binary
+*.zst binary
+*.rpm binary
+*.deb binary

@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=OLED Guard
+GenericName=OLED Screen Protector
+GenericName[tr]=OLED Ekran Koruyucu
+Comment=Manually protect your OLED display while background work continues
+Comment[tr]=Arka plandaki iş sürerken OLED ekranı elle korumaya al
+Exec=oled-guard
+Icon=io.github.Mouge01.OLEDGuard
+Terminal=false
+Categories=Utility;
+StartupNotify=true
